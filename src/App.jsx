@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./app.css";
+import Trivia from "./components/Trivia";
 
 function App() {
   const [questionNumber, setQuestionNumber] = useState(7);
@@ -28,7 +29,9 @@ function App() {
         <div className="top">
           <div className="timer">30</div>
         </div>
-        <div className="bottom">question and answer</div>
+        <div className="bottom">
+          <Trivia />
+        </div>
       </div>
       <div className="pyramid">
         <ul className="moneyList">

@@ -1,9 +1,21 @@
 import React, { useEffect, useState } from "react";
+import useSound from "use-sound";
+import intro from "../assets/intro-music.wav";
+import correct from "../assets/Correct.wav";
+import wrong from "../assets/incorrect.wav";
 
 const Trivia = ({ data, setTimeStop, questionNumber, setQuestionNumber }) => {
   const [question, setQuestion] = useState(null);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [className, setClassName] = useState("answer");
+  //para reproducirs los sonidos
+  const [play, { sound }] = useSound(intro);
+  const [correctAnswer] = useSound(correct);
+  const [wrongAnswer] = useSound(wrong);
+
+  useEffect(() => {
+    play();
+  }, [play]);
 
   useEffect(() => {
     setQuestion(data[questionNumber - 1]);
@@ -21,12 +33,19 @@ const Trivia = ({ data, setTimeStop, questionNumber, setQuestionNumber }) => {
     delay(2000, () =>
       setClassName(answer.correct ? "answer correct" : "answer wrong")
     );
-    delay(6000, () => {
+    delay(5000, () => {
       if (answer.correct) {
-        setQuestionNumber((prev) => prev + 1);
-        setSelectedAnswer(null);
+        sound.fade(0, 1, 2000);
+        correctAnswer();
+        delay(2000, () => {
+          setQuestionNumber((prev) => prev + 1);
+          setSelectedAnswer(null);
+        });
       } else {
-        setTimeStop(true);
+        wrongAnswer();
+        delay(1000, () => {
+          setTimeStop(true);
+        });
       }
     });
   };

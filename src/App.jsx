@@ -106,15 +106,26 @@ function App() {
       setEarned(moneyPyramid?.find((m) => m.id === questionNumber - 1).amount);
   }, [moneyPyramid, questionNumber]);
 
+  const startAgain = () => {
+    window.location.reload();
+  };
+
   return (
     <div className="app">
       {userName ? (
         <>
           <div className="main">
             {timeStop ? (
-              <h1 className="endText">
-                {userName} you earned: {earned}
-              </h1>
+              <>
+                <div className="start">
+                  <h1 className="endText">
+                    {userName} you earned: {earned}
+                  </h1>
+                  <button className="startButton" onClick={() => startAgain()}>
+                    Comenzar de Nuevo
+                  </button>
+                </div>
+              </>
             ) : (
               <>
                 <div className="top">
